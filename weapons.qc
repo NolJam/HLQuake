@@ -64,7 +64,6 @@ void() W_FireGravGun =
 		missile.movetype = MOVETYPE_BOUNCE;
 		missile.solid = SOLID_BBOX;
 		setmodel(missile, self.held_entity.model);
-		setsize(missile, VEC_HULL_MIN, VEC_HULL_MAX);
 
 		makevectors(self.v_angle);
 
@@ -78,14 +77,10 @@ void() W_FireGravGun =
 		}
 
 		missile.avelocity = '300 300 300';
-
 		missile.angles = vectoangles(missile.velocity);
-
-		setorigin(missile, self.origin);
-
 		remove(self.held_entity);
-
-		// self.held_entity.touch = GrenadeTouch;
+		setorigin(missile, self.origin + v_forward*64);
+		setsize(missile, VEC_HULL_MIN, VEC_HULL_MAX);
 
 		return;
 	}
@@ -657,7 +652,7 @@ void() W_FireGrenade =
 	missile.think = GrenadeExplode;
 
 	setmodel(missile, "progs/grenade.mdl");
-	setsize(missile, '0 0 0', '0 0 0');
+	setsize(missile, VEC_HULL_MIN, VEC_HULL_MAX);
 	setorigin(missile, self.origin);
 };
 
