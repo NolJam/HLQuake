@@ -502,7 +502,7 @@ void(string gibname, float dm) ThrowGib =
 	setsize(new, '0 0 0', '0 0 0');
 	new.velocity = VelocityForDamage(dm);
 	new.movetype = MOVETYPE_BOUNCE;
-	new.solid = SOLID_NOT;
+	new.solid = SOLID_BBOX;
 	new.avelocity_x = random()*600;
 	new.avelocity_y = random()*600;
 	new.avelocity_z = random()*600;
