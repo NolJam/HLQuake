@@ -49,6 +49,64 @@ float() crandom =
 
 /*
 ================
+W_FireGravGun
+================
+*/
+void() W_FireGravGun =
+{
+	if (self.holding_entity)
+	{
+		self.holding_entity = FALSE;
+
+		entity missile;
+		missile = spawn();
+		missile.owner = self;
+		missile.movetype = MOVETYPE_BOUNCE;
+		missile.solid = SOLID_BBOX;
+		setmodel(missile, self.held_entity.model);
+		setsize(missile, VEC_HULL_MIN, VEC_HULL_MAX);
+
+		makevectors(self.v_angle);
+
+		if (self.v_angle_x)
+			missile.velocity = v_forward*600 + v_up * 200 + crandom()*v_right*10 + crandom()*v_up*10;
+		else
+		{
+			missile.velocity = aim(self, 10000);
+			missile.velocity = missile.velocity * 600;
+			missile.velocity_z = 200;
+		}
+
+		missile.avelocity = '300 300 300';
+
+		missile.angles = vectoangles(missile.velocity);
+
+		setorigin(missile, self.origin);
+
+		remove(self.held_entity);
+
+		// self.held_entity.touch = GrenadeTouch;
+
+		return;
+	}
+
+	vector source;
+
+	source = self.origin + '0 0 16';
+	traceline(source, source + v_forward*128, FALSE, self);
+	// if (trace_fraction == 1.0)
+	// 	return;
+	if (trace_ent.solid == SOLID_BBOX)
+		{
+			// trace_ent.origin = self.origin + v_forward*128;
+			self.holding_entity = TRUE;
+			self.held_entity = trace_ent;
+			// self.held_entity.origin = self.origin + v_forward*128;
+		}
+}
+
+/*
+================
 W_FireAxe
 ================
 */
@@ -895,7 +953,7 @@ void() player_rocket1;
 
 void() W_Attack =
 {
-	float r;
+	// float r;
 
 	if (!W_CheckNoAmmo())
 		return;
@@ -905,17 +963,20 @@ void() W_Attack =
 
 	if (self.weapon == IT_AXE)
 	{
-		sound(self, CHAN_WEAPON, "weapons/ax1.wav", 1, ATTN_NORM);
-		r = random();
-		if (r < 0.25)
-			player_axe1();
-		else if (r<0.5)
-			player_axeb1();
-		else if (r<0.75)
-			player_axec1();
-		else
-			player_axed1();
-		self.attack_finished = time + 0.5;
+		W_FireGravGun();
+		self.attack_finished = time + 1;
+
+		// sound(self, CHAN_WEAPON, "weapons/ax1.wav", 1, ATTN_NORM);
+		// r = random();
+		// if (r < 0.25)
+		// 	player_axe1();
+		// else if (r<0.5)
+		// 	player_axeb1();
+		// else if (r<0.75)
+		// 	player_axec1();
+		// else
+		// 	player_axed1();
+		// self.attack_finished = time + 0.5;
 	}
 	else if (self.weapon == IT_SHOTGUN)
 	{

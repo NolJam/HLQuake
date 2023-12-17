@@ -500,6 +500,8 @@ float AS_MISSILE = 4;
 .float air_finished; // when time > air_finished, start drowning
 .float bubble_count; // keeps track of the number of bubbles
 .string deathtype; // keeps track of how the player died
+.entity held_entity; // which entity the grav gun is holding
+.float holding_entity; // keeps track of whether player is holding entity w/ grav gun
 
 //
 // object stuff

@@ -1074,6 +1074,11 @@ void() PlayerPostThink =
 		self.jump_flag = self.velocity_z;
 
 	CheckPowerups();
+
+	if (self.holding_entity)
+	{
+		self.held_entity.origin = self.origin + v_forward*64;
+	}
 };
 
 

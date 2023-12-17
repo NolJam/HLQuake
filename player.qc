@@ -499,7 +499,7 @@ void(string gibname, float dm) ThrowGib =
 	new = spawn();
 	new.origin = self.origin;
 	setmodel(new, gibname);
-	setsize(new, '0 0 0', '0 0 0');
+	setsize(new, VEC_HULL_MIN, VEC_HULL_MAX);
 	new.velocity = VelocityForDamage(dm);
 	new.movetype = MOVETYPE_BOUNCE;
 	new.solid = SOLID_BBOX;
