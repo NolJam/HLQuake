@@ -133,7 +133,7 @@ void() OgreFireGrenade =
 	missile.touch = OgreGrenadeTouch;
 
 // set missile duration
-	missile.nextthink = time + 2.5;
+	missile.nextthink = time + 3.5;
 	missile.think = OgreGrenadeExplode;
 
 	setmodel(missile, "progs/grenade.mdl");

@@ -47,23 +47,72 @@ float() crandom =
 	return 2*(random() - 0.5);
 };
 
+void() ResetPhysObject = // NOT CURRENTLY USED
+{
+	entity e;
+
+	e = spawn();
+	e.angles = self.angles;
+	setmodel(e, self.model);
+	setsize(e, VEC_HULL_MIN, VEC_HULL_MAX);
+	setorigin(e, self.origin);
+	remove(self);
+}
+
+float(vector v) VelocityToDamage = 
+{
+	float d;
+
+	if (v_x < 0) d += -v_x;
+	else d += v_x;
+
+	if (v_y < 0) d += -v_y;
+	else d += v_y;
+
+	if (v_z < 0) d += -v_z;
+	else d += v_z;
+
+	d *= 0.1;
+	return d;
+}
+
+void() GravTouch = 
+{
+	self.dmg = VelocityToDamage(self.velocity);
+
+	if (other == self.owner)
+		return; // don't explode on owner
+	if (other.takedamage == DAMAGE_AIM)
+	{
+		T_Damage(other, self, self, self.dmg);
+		return;
+	}
+}
+
 /*
 ================
 W_FireGravGun
 ================
 */
+void() OgreGrenadeTouch;
+void() GrenadeTouch;
+void() GrenadeExplode;
+
 void() W_FireGravGun =
 {
 	if (self.holding_entity)
 	{
 		self.holding_entity = FALSE;
 
+		self.punchangle_x = -2;
+
 		entity missile;
 		missile = spawn();
-		missile.owner = self;
+		missile.owner = missile;
 		missile.movetype = MOVETYPE_BOUNCE;
 		missile.solid = SOLID_BBOX;
 		setmodel(missile, self.held_entity.model);
+		setsize(missile, VEC_HULL_MIN, VEC_HULL_MAX);
 
 		makevectors(self.v_angle);
 
@@ -76,11 +125,25 @@ void() W_FireGravGun =
 			missile.velocity_z = 200;
 		}
 
+		if (self.held_entity.touch == OgreGrenadeTouch || self.held_entity.touch == GrenadeTouch)
+		{
+			missile.classname = "grenade";
+			missile.touch = GrenadeTouch;
+			missile.nextthink = time + 2.5;
+			missile.think = GrenadeExplode;
+		}
+		else
+		{
+			missile.touch = GravTouch;
+		}
+
 		missile.avelocity = '300 300 300';
 		missile.angles = vectoangles(missile.velocity);
 		remove(self.held_entity);
-		setorigin(missile, self.origin + v_forward*64);
-		setsize(missile, VEC_HULL_MIN, VEC_HULL_MAX);
+		setorigin(missile, self.origin + v_forward*64 + v_up*16);
+
+		// missile.nextthink = time + 2.5;
+		// missile.think = ResetPhysObject;
 
 		return;
 	}
@@ -88,7 +151,7 @@ void() W_FireGravGun =
 	vector source;
 
 	source = self.origin + '0 0 16';
-	traceline(source, source + v_forward*128, FALSE, self);
+	traceline(source, source + v_forward*192, FALSE, self);
 	// if (trace_fraction == 1.0)
 	// 	return;
 	if (trace_ent.solid == SOLID_BBOX)
@@ -959,7 +1022,7 @@ void() W_Attack =
 	if (self.weapon == IT_AXE)
 	{
 		W_FireGravGun();
-		self.attack_finished = time + 1;
+		self.attack_finished = time + 0.3;
 
 		// sound(self, CHAN_WEAPON, "weapons/ax1.wav", 1, ATTN_NORM);
 		// r = random();

@@ -1077,7 +1077,7 @@ void() PlayerPostThink =
 
 	if (self.holding_entity)
 	{
-		self.held_entity.origin = self.origin + v_forward*64;
+		self.held_entity.origin = self.origin + v_forward*64 + v_up*16;
 	}
 };
 
