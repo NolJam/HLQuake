@@ -137,7 +137,7 @@ void() OgreFireGrenade =
 	missile.think = OgreGrenadeExplode;
 
 	setmodel(missile, "progs/grenade.mdl");
-	setsize(missile, VEC_HULL_MIN, VEC_HULL_MAX);
+	setsize(missile, MIN_DEFAULT_BBOX, MAX_DEFAULT_BBOX);
 	setorigin(missile, self.origin);
 };
 

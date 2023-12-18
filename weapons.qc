@@ -54,7 +54,7 @@ void() ResetPhysObject = // NOT CURRENTLY USED
 	e = spawn();
 	e.angles = self.angles;
 	setmodel(e, self.model);
-	setsize(e, VEC_HULL_MIN, VEC_HULL_MAX);
+	setsize(e, MIN_DEFAULT_BBOX, MAX_DEFAULT_BBOX);
 	setorigin(e, self.origin);
 	remove(self);
 }
@@ -113,7 +113,7 @@ void() W_FireGravGun =
 		missile.movetype = MOVETYPE_BOUNCE;
 		missile.solid = SOLID_BBOX;
 		setmodel(missile, self.held_entity.model);
-		setsize(missile, VEC_HULL_MIN, VEC_HULL_MAX);
+		setsize(missile, MIN_DEFAULT_BBOX, MAX_DEFAULT_BBOX);
 
 		makevectors(self.v_angle);
 
@@ -725,7 +725,7 @@ void() W_FireGrenade =
 	missile.think = ReparentGrenade;
 
 	setmodel(missile, "progs/grenade.mdl");
-	setsize(missile, VEC_HULL_MIN, VEC_HULL_MAX);
+	setsize(missile, MIN_DEFAULT_BBOX, MAX_DEFAULT_BBOX);
 	setorigin(missile, self.origin);
 };
 
