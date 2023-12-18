@@ -82,7 +82,7 @@ void() GravTouch =
 
 	if (other == self.owner)
 		return; // don't explode on owner
-	if (other.takedamage == DAMAGE_AIM)
+	if (other.takedamage == DAMAGE_AIM && other != self.last_owner)
 	{
 		T_Damage(other, self, self.last_owner, self.dmg);
 		return;
@@ -153,10 +153,10 @@ void() W_FireGravGun =
 
 	// makevectors(self.v_angle); // don't know if I should use this
 	source = self.origin + '0 0 16';
-	traceline(source, source + v_forward*192, FALSE, self);
-	// if (trace_fraction == 1.0)
-	// 	return;
-	if (trace_ent.solid == SOLID_BBOX)
+	traceline(source + v_forward*32, source + v_forward*192, FALSE, self);
+	// dprint(trace_ent.classname);
+	// dprint("\n");
+	if (trace_ent.movetype == MOVETYPE_BOUNCE)
 		{
 			// trace_ent.origin = self.origin + v_forward*128;
 			self.holding_entity = TRUE;

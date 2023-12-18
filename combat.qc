@@ -247,6 +247,11 @@ void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDam
 				points = damage - points;
 				if (head == attacker)
 					points = points * 0.5;
+				if (head.classname == "player")
+				{
+					head.held_entity = head;
+					head.holding_entity = FALSE;
+				}
 				if (points > 0)
 				{
 					if (CanDamage(head, inflictor))
