@@ -221,6 +221,7 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage=
 	self = oldself;
 };
 
+void(entity phys_obj) ResetPhysObject;
 /*
 ============
 T_RadiusDamage
@@ -247,9 +248,10 @@ void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDam
 				points = damage - points;
 				if (head == attacker)
 					points = points * 0.5;
-				if (head.classname == "player")
+				if (head.holding_entity)
 				{
-					head.held_entity = head;
+					ResetPhysObject(head.held_entity);
+					// head.held_entity = head;
 					head.holding_entity = FALSE;
 				}
 				if (points > 0)

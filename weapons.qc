@@ -47,16 +47,19 @@ float() crandom =
 	return 2*(random() - 0.5);
 };
 
-void() ResetPhysObject = // NOT CURRENTLY USED
+void(entity phys_obj) ResetPhysObject = 
 {
 	entity e;
 
 	e = spawn();
-	e.angles = self.angles;
-	setmodel(e, self.model);
+	e.angles = phys_obj.angles;
+	setmodel(e, phys_obj.model);
 	setsize(e, MIN_DEFAULT_BBOX, MAX_DEFAULT_BBOX);
-	setorigin(e, self.origin);
-	remove(self);
+	e.classname = phys_obj.classname;
+	e.solid = SOLID_BBOX;
+	e.movetype = MOVETYPE_BOUNCE;
+	setorigin(e, phys_obj.origin);
+	remove(phys_obj);
 }
 
 float(vector v) VelocityToDamage = 
