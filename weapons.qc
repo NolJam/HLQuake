@@ -116,7 +116,7 @@ void() W_FireGravGun =
 	{
 		self.holding_entity = FALSE;
 
-		self.punchangle_x = -2;
+		self.punchangle_x = -3;
 
 		entity missile;
 		missile = spawn();
@@ -169,11 +169,21 @@ void() W_FireGravGun =
 	// dprint(trace_ent.classname);
 	// dprint("\n");
 	if (trace_ent.movetype == MOVETYPE_BOUNCE)
-		{
-			self.holding_entity = TRUE;
-			self.held_entity = trace_ent;
-			self.held_entity.owner = self;
-		}
+	{
+		self.holding_entity = TRUE;
+		self.held_entity = trace_ent;
+		self.held_entity.owner = self;
+	}
+	else if (trace_ent.movetype == MOVETYPE_STEP)
+	{
+		T_Damage(trace_ent, self, self, 40);
+		self.punchangle_x = -3;
+		self.velocity += -v_forward*400;
+	}
+	// else if (trace_ent.solid == SOLID_BSP)
+	// {
+	// 	self.velocity += trace_plane_normal*400;
+	// }
 }
 
 /*
