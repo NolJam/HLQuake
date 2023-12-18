@@ -250,9 +250,9 @@ void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDam
 					points = points * 0.5;
 				if (head.holding_entity)
 				{
-					ResetPhysObject(head.held_entity);
-					// head.held_entity = head;
 					head.holding_entity = FALSE;
+					if (head.held_entity != self)
+						ResetPhysObject(head.held_entity);
 				}
 				if (points > 0)
 				{

@@ -23,6 +23,10 @@ void() player_run;
 void(entity bomb, entity attacker, float rad, entity ignore) T_RadiusDamage;
 void(vector org, vector vel, float damage) SpawnBlood;
 void() SuperDamageSound;
+void() OgreGrenadeTouch;
+void() GrenadeTouch;
+void() GrenadeExplode;
+
 
 
 // called by worldspawn
@@ -59,6 +63,15 @@ void(entity phys_obj) ResetPhysObject =
 	e.solid = SOLID_BBOX;
 	e.movetype = MOVETYPE_BOUNCE;
 	setorigin(e, phys_obj.origin);
+
+	if (phys_obj.touch == OgreGrenadeTouch || phys_obj.touch == GrenadeTouch)
+	{
+		e.classname = "grenade";
+		e.touch = GrenadeTouch;
+		e.nextthink = time + 2.5;
+		e.think = GrenadeExplode;
+	}
+
 	remove(phys_obj);
 }
 
@@ -97,10 +110,6 @@ void() GravTouch =
 W_FireGravGun
 ================
 */
-void() OgreGrenadeTouch;
-void() GrenadeTouch;
-void() GrenadeExplode;
-
 void() W_FireGravGun =
 {
 	if (self.holding_entity)
@@ -161,10 +170,9 @@ void() W_FireGravGun =
 	// dprint("\n");
 	if (trace_ent.movetype == MOVETYPE_BOUNCE)
 		{
-			// trace_ent.origin = self.origin + v_forward*128;
 			self.holding_entity = TRUE;
 			self.held_entity = trace_ent;
-			// self.held_entity.origin = self.origin + v_forward*128;
+			self.held_entity.owner = self;
 		}
 }
 

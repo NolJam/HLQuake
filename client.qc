@@ -1077,7 +1077,10 @@ void() PlayerPostThink =
 
 	if (self.holding_entity)
 	{
-		self.held_entity.origin = self.origin + v_forward*64 + v_up*16;
+		vector org = self.origin + v_up*16;
+		traceline(org, org + v_forward*64, FALSE, self);
+		self.held_entity.origin = trace_endpos;
+		// self.held_entity.origin = self.origin + v_forward*64 + v_up*16;
 	}
 };
 
