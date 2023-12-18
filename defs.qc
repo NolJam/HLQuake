@@ -508,6 +508,7 @@ float AS_MISSILE = 4;
 //
 .string mdl;
 .vector mangle; // angle at start
+.entity last_owner; // physics obj previous owner (player) used to aggro enemies
 
 .vector oldorigin; // only used by secret door
 

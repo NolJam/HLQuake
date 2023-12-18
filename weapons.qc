@@ -84,7 +84,7 @@ void() GravTouch =
 		return; // don't explode on owner
 	if (other.takedamage == DAMAGE_AIM)
 	{
-		T_Damage(other, self, self, self.dmg);
+		T_Damage(other, self, self.last_owner, self.dmg);
 		return;
 	}
 }
@@ -108,6 +108,7 @@ void() W_FireGravGun =
 
 		entity missile;
 		missile = spawn();
+		missile.last_owner = self;
 		missile.owner = missile;
 		missile.movetype = MOVETYPE_BOUNCE;
 		missile.solid = SOLID_BBOX;
@@ -150,6 +151,7 @@ void() W_FireGravGun =
 
 	vector source;
 
+	// makevectors(self.v_angle); // don't know if I should use this
 	source = self.origin + '0 0 16';
 	traceline(source, source + v_forward*192, FALSE, self);
 	// if (trace_fraction == 1.0)
@@ -645,7 +647,7 @@ void() W_FireLightning =
 
 void() GrenadeExplode =
 {
-	T_RadiusDamage(self, self.owner, 120, world);
+	T_RadiusDamage(self, self.last_owner, 120, world);
 
 	WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
 	WriteByte(MSG_BROADCAST, TE_EXPLOSION);
@@ -669,6 +671,14 @@ void() GrenadeTouch =
 	if (self.velocity == '0 0 0')
 		self.avelocity = '0 0 0';
 };
+
+void() ReparentGrenade = // sets grenade's owner to self
+{
+	self.last_owner = self.owner;
+	self.owner = self;
+	self.nextthink = time + 2.5;
+	self.think = GrenadeExplode;
+}
 
 /*
 ================
@@ -711,8 +721,8 @@ void() W_FireGrenade =
 	missile.touch = GrenadeTouch;
 
 // set missile duration
-	missile.nextthink = time + 2.5;
-	missile.think = GrenadeExplode;
+	missile.nextthink = time + 1;
+	missile.think = ReparentGrenade;
 
 	setmodel(missile, "progs/grenade.mdl");
 	setsize(missile, VEC_HULL_MIN, VEC_HULL_MAX);
