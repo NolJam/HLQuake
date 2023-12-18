@@ -105,6 +105,21 @@ void() GravTouch =
 	}
 }
 
+void(entity cur_obj, entity new_obj) CheckPhysGrenade = // checks to see if new phys obj needs to be a grenade
+{
+	if (cur_obj.touch == OgreGrenadeTouch || cur_obj.touch == GrenadeTouch)
+		{
+			new_obj.classname = "grenade";
+			new_obj.touch = GrenadeTouch;
+			new_obj.nextthink = time + 2.5;
+			new_obj.think = GrenadeExplode;
+		}
+		else
+		{
+			new_obj.touch = GravTouch;
+		}
+}
+
 /*
 ================
 W_FireGravGun
@@ -129,6 +144,18 @@ void() W_FireGravGun =
 
 		makevectors(self.v_angle);
 
+		traceline(self.origin, self.origin + v_forward*96, FALSE, self);
+		if (trace_fraction < 1) // check to avoid thru wall collision
+		{
+			missile.avelocity = '300 300 300';
+			missile.angles = vectoangles(missile.velocity);
+			setorigin(missile, trace_endpos);
+			missile.velocity = trace_plane_normal*400 + v_up*200;
+			CheckPhysGrenade(self.held_entity, missile);
+			remove(self.held_entity);
+			return;
+		}
+
 		if (self.v_angle_x)
 			missile.velocity = v_forward*600 + v_up * 200 + crandom()*v_right*10 + crandom()*v_up*10;
 		else
@@ -138,17 +165,19 @@ void() W_FireGravGun =
 			missile.velocity_z = 200;
 		}
 
-		if (self.held_entity.touch == OgreGrenadeTouch || self.held_entity.touch == GrenadeTouch)
-		{
-			missile.classname = "grenade";
-			missile.touch = GrenadeTouch;
-			missile.nextthink = time + 2.5;
-			missile.think = GrenadeExplode;
-		}
-		else
-		{
-			missile.touch = GravTouch;
-		}
+		CheckPhysGrenade(self.held_entity, missile);
+
+		// if (self.held_entity.touch == OgreGrenadeTouch || self.held_entity.touch == GrenadeTouch)
+		// {
+		// 	missile.classname = "grenade";
+		// 	missile.touch = GrenadeTouch;
+		// 	missile.nextthink = time + 2.5;
+		// 	missile.think = GrenadeExplode;
+		// }
+		// else
+		// {
+		// 	missile.touch = GravTouch;
+		// }
 
 		missile.avelocity = '300 300 300';
 		missile.angles = vectoangles(missile.velocity);
