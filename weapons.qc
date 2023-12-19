@@ -132,6 +132,39 @@ void(entity cur_obj, entity new_obj) CheckPhysType = // checks to see if new phy
 		}
 }
 
+void(float shotcount, vector dir, vector spread) TraceGrab = // so precision isn't req for grabbing w/ grav gun
+{
+	vector direction;
+	vector src;
+
+	// makevectors(self.v_angle);
+
+	src = self.origin + v_forward*10;
+	src_z = self.absmin_z + self.size_z * 0.7;
+
+	while (shotcount > 0)
+	{
+		direction = dir + crandom()*spread_x*v_right + crandom()*spread_y*v_up;
+
+		traceline(src, src + direction*192, FALSE, self);
+		if (trace_ent.solid == SOLID_BBOX)
+		{
+			self.holding_entity = TRUE;
+			self.held_entity = trace_ent;
+			self.held_entity.owner = self;
+			shotcount = 0;
+		}
+		else if (trace_ent.movetype == MOVETYPE_STEP)
+		{
+			T_Damage(trace_ent, self, self, 40);
+			self.punchangle_x = -3;
+			self.velocity += -v_forward*400;
+			shotcount = 0;
+		}
+			shotcount = shotcount - 1;
+		}
+};
+
 /*
 ================
 W_FireGravGun
@@ -189,9 +222,9 @@ void() W_FireGravGun =
 
 	vector source;
 
-	// makevectors(self.v_angle); // don't know if I should use this
+	makevectors(self.v_angle); // don't know if I should use this
 	source = self.origin + '0 0 16';
-	traceline(source + v_forward*32, source + v_forward*192, FALSE, self);
+	traceline(source, source + v_forward*192, FALSE, self);
 
 	if (trace_ent.solid == SOLID_BBOX)
 	{
@@ -205,6 +238,8 @@ void() W_FireGravGun =
 		self.punchangle_x = -3;
 		self.velocity += -v_forward*400;
 	}
+	else
+		TraceGrab(4, aim(self, 100000), '0.1 0.1 0'); // if no ent directly ahead, try w/ spread
 }
 
 /*
