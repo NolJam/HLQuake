@@ -248,7 +248,7 @@ void() W_FireGravGun =
 		self.velocity += -v_forward*400;
 	}
 	else
-		TraceGrab(6, aim(self, 100000), '0.1 0.1 0'); // if no ent directly ahead, try w/ spread
+		TraceGrab(6, aim(self, 100000), '0.15 0.15 0'); // if no ent directly ahead, try w/ spread
 }
 
 /*
