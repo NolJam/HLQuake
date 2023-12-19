@@ -26,6 +26,7 @@ void() SuperDamageSound;
 void() OgreGrenadeTouch;
 void() GrenadeTouch;
 void() GrenadeExplode;
+void() barrel_explode;
 
 
 
@@ -113,10 +114,20 @@ void(entity cur_obj, entity new_obj) CheckPhysGrenade = // checks to see if new 
 			new_obj.touch = GrenadeTouch;
 			new_obj.nextthink = time + 2.5;
 			new_obj.think = GrenadeExplode;
+			new_obj.avelocity = '300 300 300';
+			new_obj.angles = vectoangles(new_obj.velocity);
+		}
+		else if (cur_obj.th_die == barrel_explode)
+		{
+			new_obj.takedamage = DAMAGE_AIM;
+			new_obj.th_die = barrel_explode;
+			new_obj.touch = GravTouch;
 		}
 		else
 		{
 			new_obj.touch = GravTouch;
+			new_obj.avelocity = '300 300 300';
+			new_obj.angles = vectoangles(new_obj.velocity);
 		}
 }
 
@@ -179,8 +190,8 @@ void() W_FireGravGun =
 		// 	missile.touch = GravTouch;
 		// }
 
-		missile.avelocity = '300 300 300';
-		missile.angles = vectoangles(missile.velocity);
+		// missile.avelocity = '300 300 300';
+		// missile.angles = vectoangles(missile.velocity);
 		remove(self.held_entity);
 		setorigin(missile, self.origin + v_forward*64 + v_up*16);
 
@@ -190,6 +201,8 @@ void() W_FireGravGun =
 		return;
 	}
 
+	// IF NOT HOLDING ENTITY
+
 	vector source;
 
 	// makevectors(self.v_angle); // don't know if I should use this
@@ -197,7 +210,7 @@ void() W_FireGravGun =
 	traceline(source + v_forward*32, source + v_forward*192, FALSE, self);
 	// dprint(trace_ent.classname);
 	// dprint("\n");
-	if (trace_ent.movetype == MOVETYPE_BOUNCE)
+	if (trace_ent.solid == SOLID_BBOX)
 	{
 		self.holding_entity = TRUE;
 		self.held_entity = trace_ent;
@@ -208,6 +221,7 @@ void() W_FireGravGun =
 		T_Damage(trace_ent, self, self, 40);
 		self.punchangle_x = -3;
 		self.velocity += -v_forward*400;
+		// trace_ent.velocity += v_forward*400;
 	}
 	// else if (trace_ent.solid == SOLID_BSP)
 	// {
