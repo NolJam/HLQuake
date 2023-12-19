@@ -261,6 +261,7 @@ void() misc_explobox =
 	self.health = 20;
 	self.th_die = barrel_explode;
 	self.takedamage = DAMAGE_AIM;
+	self.view_ofs = '16 16 0';
 
 	self.origin_z = self.origin_z + 2;
 	oldz = self.origin_z;
@@ -293,6 +294,7 @@ void() misc_explobox2 =
 	self.health = 20;
 	self.th_die = barrel_explode;
 	self.takedamage = DAMAGE_AIM;
+	self.view_ofs = '16 16 0'; 
 
 	self.origin_z = self.origin_z + 2;
 	oldz = self.origin_z;
