@@ -96,9 +96,10 @@ float(vector v) VelocityToDamage =
 void() GravTouch = 
 {
 	self.dmg = VelocityToDamage(self.velocity);
+	T_Damage(self, self, self.last_owner, self.dmg);
 
 	if (other == self.owner)
-		return; // don't explode on owner
+		return; 
 	if (other.takedamage == DAMAGE_AIM && other != self.last_owner)
 	{
 		T_Damage(other, self, self.last_owner, self.dmg);
