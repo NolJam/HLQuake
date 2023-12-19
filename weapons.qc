@@ -179,25 +179,8 @@ void() W_FireGravGun =
 
 		CheckPhysType(self.held_entity, missile);
 
-		// if (self.held_entity.touch == OgreGrenadeTouch || self.held_entity.touch == GrenadeTouch)
-		// {
-		// 	missile.classname = "grenade";
-		// 	missile.touch = GrenadeTouch;
-		// 	missile.nextthink = time + 2.5;
-		// 	missile.think = GrenadeExplode;
-		// }
-		// else
-		// {
-		// 	missile.touch = GravTouch;
-		// }
-
-		// missile.avelocity = '300 300 300';
-		// missile.angles = vectoangles(missile.velocity);
 		remove(self.held_entity);
 		setorigin(missile, self.origin + v_forward*64 + v_up*16);
-
-		// missile.nextthink = time + 2.5;
-		// missile.think = ResetPhysObject;
 
 		return;
 	}
@@ -209,8 +192,7 @@ void() W_FireGravGun =
 	// makevectors(self.v_angle); // don't know if I should use this
 	source = self.origin + '0 0 16';
 	traceline(source + v_forward*32, source + v_forward*192, FALSE, self);
-	// dprint(trace_ent.classname);
-	// dprint("\n");
+
 	if (trace_ent.solid == SOLID_BBOX)
 	{
 		self.holding_entity = TRUE;
@@ -222,12 +204,7 @@ void() W_FireGravGun =
 		T_Damage(trace_ent, self, self, 40);
 		self.punchangle_x = -3;
 		self.velocity += -v_forward*400;
-		// trace_ent.velocity += v_forward*400;
 	}
-	// else if (trace_ent.solid == SOLID_BSP)
-	// {
-	// 	self.velocity += trace_plane_normal*400;
-	// }
 }
 
 /*
