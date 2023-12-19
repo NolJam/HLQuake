@@ -59,7 +59,6 @@ void(entity phys_obj) ResetPhysObject =
 	e = spawn();
 	e.angles = phys_obj.angles;
 	setmodel(e, phys_obj.model);
-	setsize(e, MIN_DEFAULT_BBOX, MAX_DEFAULT_BBOX);
 	e.classname = phys_obj.classname;
 	e.solid = SOLID_BBOX;
 	e.movetype = MOVETYPE_BOUNCE;
@@ -71,7 +70,17 @@ void(entity phys_obj) ResetPhysObject =
 		e.touch = GrenadeTouch;
 		e.nextthink = time + 2.5;
 		e.think = GrenadeExplode;
+		setsize(e, '-4 -4 -6', '4 4 6');
 	}
+	else if (phys_obj.th_die == barrel_explode)
+	{
+		e.takedamage = DAMAGE_AIM;
+		e.th_die = barrel_explode;
+		e.view_ofs = phys_obj.view_ofs;
+		// e.origin -= e.view_ofs;
+	}
+	else
+		setsize(e, MIN_DEFAULT_BBOX, MAX_DEFAULT_BBOX);
 
 	remove(phys_obj);
 }
@@ -140,7 +149,7 @@ void(float shotcount, vector dir, vector spread) TraceGrab = // so precision isn
 	// makevectors(self.v_angle);
 
 	src = self.origin + v_forward*10;
-	src_z = self.absmin_z + self.size_z * 0.7;
+	src_z += 16;
 
 	while (shotcount > 0)
 	{
@@ -239,7 +248,7 @@ void() W_FireGravGun =
 		self.velocity += -v_forward*400;
 	}
 	else
-		TraceGrab(4, aim(self, 100000), '0.1 0.1 0'); // if no ent directly ahead, try w/ spread
+		TraceGrab(6, aim(self, 100000), '0.1 0.1 0'); // if no ent directly ahead, try w/ spread
 }
 
 /*
