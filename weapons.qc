@@ -767,7 +767,7 @@ void() W_FireGrenade =
 	missile.think = ReparentGrenade;
 
 	setmodel(missile, "progs/grenade.mdl");
-	setsize(missile, MIN_DEFAULT_BBOX, MAX_DEFAULT_BBOX);
+	setsize(missile, '-4 -4 -6', '4 4 6');
 	setorigin(missile, self.origin);
 };
 
