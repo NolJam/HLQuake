@@ -107,7 +107,7 @@ void() GravTouch =
 	}
 }
 
-void(entity cur_obj, entity new_obj) CheckPhysGrenade = // checks to see if new phys obj needs to be a grenade
+void(entity cur_obj, entity new_obj) CheckPhysType = // checks to see if new phys obj needs to be a grenade
 {
 	if (cur_obj.touch == OgreGrenadeTouch || cur_obj.touch == GrenadeTouch)
 		{
@@ -163,7 +163,7 @@ void() W_FireGravGun =
 			missile.angles = vectoangles(missile.velocity);
 			setorigin(missile, trace_endpos);
 			missile.velocity = trace_plane_normal*400 + v_up*200;
-			CheckPhysGrenade(self.held_entity, missile);
+			CheckPhysType(self.held_entity, missile);
 			remove(self.held_entity);
 			return;
 		}
@@ -177,7 +177,7 @@ void() W_FireGravGun =
 			missile.velocity_z = 200;
 		}
 
-		CheckPhysGrenade(self.held_entity, missile);
+		CheckPhysType(self.held_entity, missile);
 
 		// if (self.held_entity.touch == OgreGrenadeTouch || self.held_entity.touch == GrenadeTouch)
 		// {
