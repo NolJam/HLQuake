@@ -311,12 +311,30 @@ void() misc_explobox2 =
 void() break_box =
 {
 	ThrowGib("progs/gib3.mdl", self.health);
+
+	if (self.spawnflags & IT_SHELLS)
+	{
+		dprint("spawn shells");
+		entity e = spawn();
+		e.origin = self.origin;
+		e.touch = ammo_touch;
+		setmodel(e, "maps/b_shell0.bsp");
+		e.aflag = 20;
+		e.weapon = 1;
+		e.netname = "shells";
+		setsize(e, '0 0 0', '32 32 56');
+		e.nextthink = time + 0.1;
+		e.think = StartItem;
+	}
+
 	remove(self);
 }
 
 void() misc_box1 =
 {
 	float oldz;
+
+	precache_model("maps/b_shell0.bsp");
 
 	self.solid = SOLID_BBOX;
 	self.movetype = MOVETYPE_NONE;
