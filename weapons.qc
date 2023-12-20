@@ -116,7 +116,7 @@ void() GravTouch =
 	}
 }
 
-void(entity cur_obj, entity new_obj) CheckPhysType = // checks to see if new phys obj needs to be a grenade
+void(entity cur_obj, entity new_obj) CheckPhysType = // checks to see if thrown phys obj needs to be a grenade
 {
 	if (cur_obj.touch == OgreGrenadeTouch || cur_obj.touch == GrenadeTouch)
 		{
@@ -141,7 +141,7 @@ void(entity cur_obj, entity new_obj) CheckPhysType = // checks to see if new phy
 		}
 }
 
-void(float shotcount, vector dir, vector spread) TraceGrab = // so precision isn't req for grabbing w/ grav gun
+void(float shotcount, vector dir, vector spread) TraceGrab = // not used
 {
 	vector direction;
 	vector src;
@@ -174,6 +174,26 @@ void(float shotcount, vector dir, vector spread) TraceGrab = // so precision isn
 		}
 };
 
+void() RadiusGrab =
+{
+	// vector source = self.origin + '96 0 16';
+
+	for (entity it = findradius(trace_endpos, 96); it; it = it.chain)
+	{
+		if (self.holding_entity && it.touch == OgreGrenadeTouch)
+		{
+			self.held_entity = it;
+			self.held_entity.owner = self;
+		}
+		else if (it.solid == SOLID_BBOX)
+		{
+			self.holding_entity = TRUE;
+			self.held_entity = it;
+			self.held_entity.owner = self;
+		}
+	}
+}
+
 /*
 ================
 W_FireGravGun
@@ -194,7 +214,7 @@ void() W_FireGravGun =
 		missile.movetype = MOVETYPE_BOUNCE;
 		missile.solid = SOLID_BBOX;
 		setmodel(missile, self.held_entity.model);
-		setsize(missile, MIN_DEFAULT_BBOX, MAX_DEFAULT_BBOX);
+		setsize(missile, '0 0 0', '0 0 0');
 
 		makevectors(self.v_angle);
 
@@ -234,21 +254,24 @@ void() W_FireGravGun =
 	makevectors(self.v_angle); // don't know if I should use this
 	source = self.origin + '0 0 16';
 	traceline(source, source + v_forward*192, FALSE, self);
+	
+	RadiusGrab();
 
-	if (trace_ent.solid == SOLID_BBOX)
-	{
-		self.holding_entity = TRUE;
-		self.held_entity = trace_ent;
-		self.held_entity.owner = self;
-	}
-	else if (trace_ent.movetype == MOVETYPE_STEP)
+	// if (trace_ent.solid == SOLID_BBOX)
+	// {
+	// 	self.holding_entity = TRUE;
+	// 	self.held_entity = trace_ent;
+	// 	self.held_entity.owner = self;
+	// }
+	if (trace_ent.movetype == MOVETYPE_STEP)
 	{
 		T_Damage(trace_ent, self, self, 40);
 		self.punchangle_x = -3;
 		self.velocity += -v_forward*400;
 	}
 	else
-		TraceGrab(10, aim(self, 100000), '0.15 0.15 0'); // if no ent directly ahead, try w/ spread
+		RadiusGrab();
+		// TraceGrab(10, aim(self, 100000), '0.15 0.15 0'); // if no ent directly ahead, try w/ spread
 }
 
 /*
@@ -811,7 +834,7 @@ void() W_FireGrenade =
 	missile.think = ReparentGrenade;
 
 	setmodel(missile, "progs/grenade.mdl");
-	setsize(missile, '-4 -4 -6', '4 4 6');
+	setsize(missile, '0 0 0', '0 0 0');
 	setorigin(missile, self.origin);
 };
 
