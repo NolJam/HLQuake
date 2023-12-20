@@ -323,8 +323,12 @@ void() break_box =
 		e.weapon = 1;
 		e.netname = "shells";
 		setsize(e, '0 0 0', '32 32 56');
-		e.nextthink = time + 0.1;
-		e.think = StartItem;
+		// e.nextthink = time + 0.1;
+		// e.think = PlaceItem;
+		e.mdl = self.model; // so it can be restored on respawn
+		e.flags = FL_ITEM; // make extra wide
+		e.solid = SOLID_TRIGGER;
+		e.movetype = MOVETYPE_TOSS;
 	}
 
 	remove(self);
