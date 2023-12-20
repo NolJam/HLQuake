@@ -27,6 +27,7 @@ void() OgreGrenadeTouch;
 void() GrenadeTouch;
 void() GrenadeExplode;
 void() barrel_explode;
+void() break_box
 
 
 
@@ -70,12 +71,13 @@ void(entity phys_obj) ResetPhysObject =
 		e.touch = GrenadeTouch;
 		e.nextthink = time + 2.5;
 		e.think = GrenadeExplode;
-		setsize(e, '-4 -4 -6', '4 4 6');
+		setsize(e, '0 0 0', '0 0 0');
 	}
-	else if (phys_obj.th_die == barrel_explode)
+	else if (phys_obj.th_die == barrel_explode || phys_obj.th_die == break_box)
 	{
 		e.takedamage = DAMAGE_AIM;
-		e.th_die = barrel_explode;
+		// e.th_die = barrel_explode;
+		e.th_die = phys_obj.th_die;
 		e.view_ofs = phys_obj.view_ofs;
 		// e.origin -= e.view_ofs;
 	}
@@ -127,10 +129,11 @@ void(entity cur_obj, entity new_obj) CheckPhysType = // checks to see if thrown 
 			new_obj.avelocity = '300 300 300';
 			new_obj.angles = vectoangles(new_obj.velocity);
 		}
-		else if (cur_obj.th_die == barrel_explode)
+		else if (cur_obj.th_die == barrel_explode || cur_obj.th_die == break_box)
 		{
 			new_obj.takedamage = DAMAGE_AIM;
-			new_obj.th_die = barrel_explode;
+			// new_obj.th_die = barrel_explode;
+			new_obj.th_die = cur_obj.th_die;
 			new_obj.touch = GravTouch;
 		}
 		else

@@ -308,6 +308,38 @@ void() misc_explobox2 =
 	}
 };
 
+void() break_box =
+{
+	ThrowGib("progs/gib3.mdl", self.health);
+	remove(self);
+}
+
+void() misc_box1 =
+{
+	float oldz;
+
+	self.solid = SOLID_BBOX;
+	self.movetype = MOVETYPE_NONE;
+	precache_model("maps/box1.bsp");
+	setmodel(self, "maps/box1.bsp");
+	precache_sound("weapons/r_exp3.wav");
+	self.health = 20;
+	self.th_die = break_box;
+	self.takedamage = DAMAGE_AIM;
+	self.view_ofs = '16 16 0'; 
+
+	self.origin_z = self.origin_z + 2;
+	oldz = self.origin_z;
+	droptofloor();
+	if (oldz - self.origin_z > 250)
+	{
+		dprint("item fell out of level at ");
+		dprint(vtos(self.origin));
+		dprint("\n");
+		remove(self);
+	}
+}
+
 //============================================================================
 
 float SPAWNFLAG_SUPERSPIKE = 1;
