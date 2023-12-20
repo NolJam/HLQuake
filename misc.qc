@@ -312,9 +312,15 @@ void() break_box =
 {
 	ThrowGib("progs/gib3.mdl", self.health);
 
-	if (self.spawnflags & IT_SHELLS)
+	if (self.spawnflags == 0)
+	{
+		dprint("nothing to spawn");
+		dprint("\n");
+	}
+	else if (self.spawnflags & IT_SHELLS)
 	{
 		dprint("spawn shells");
+		dprint("\n");
 		entity e = spawn();
 		e.origin = self.origin;
 		e.touch = ammo_touch;
