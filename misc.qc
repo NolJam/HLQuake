@@ -375,11 +375,11 @@ void() break_box =
 	e.flags = FL_ITEM; // make extra wide
 	e.solid = SOLID_TRIGGER;
 	e.movetype = MOVETYPE_TOSS;
-	e.velocity_z = 300;
-	e.velocity_x = -100 + (random() * 200);
-	e.velocity_y = -100 + (random() * 200);
-	// e.velocity_x = -self.velocity_x*0.1;
-	// e.velocity_y = -self.velocity_y*0.1;
+	e.velocity_z = 100;
+	// e.velocity_x = -100 + (random() * 200);
+	// e.velocity_y = -100 + (random() * 200);
+	e.velocity_x = -self.velocity_x*0.1;
+	e.velocity_y = -self.velocity_y*0.1;
 	// e.velocity_z = 300;
 
 	remove(self);
