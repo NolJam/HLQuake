@@ -312,40 +312,92 @@ void() break_box =
 {
 	ThrowGib("progs/gib3.mdl", self.health);
 
-	if (self.spawnflags == 0)
+	if (self.style == 0)
 	{
 		dprint("nothing to spawn");
 		dprint("\n");
+		remove(self);
+		return;
 	}
-	else if (self.spawnflags & IT_SHELLS)
+
+	entity e = spawn();
+	e.origin = self.origin;
+
+	if (self.style == 1)
 	{
 		dprint("spawn shells");
 		dprint("\n");
-		entity e = spawn();
-		e.origin = self.origin;
 		e.touch = ammo_touch;
 		setmodel(e, "maps/b_shell0.bsp");
 		e.aflag = 20;
 		e.weapon = 1;
 		e.netname = "shells";
 		setsize(e, '0 0 0', '32 32 56');
-		e.mdl = self.model; // so it can be restored on respawn
-		e.flags = FL_ITEM; // make extra wide
-		e.solid = SOLID_TRIGGER;
-		e.movetype = MOVETYPE_TOSS;
-		e.velocity_x = -self.velocity_x*0.1;
-		e.velocity_y = -self.velocity_y*0.1;
-		e.velocity_z = 300;
 	}
+	else if (self.style == 2)
+	{
+		e.touch = ammo_touch;
+		setmodel(e, "maps/b_nail0.bsp");
+		e.aflag = 25;
+		e.weapon = 2;
+		e.netname = "nails";
+		setsize(e, '0 0 0', '32 32 56');
+	}
+	else if (self.style == 3)
+	{
+		e.touch = ammo_touch;
+		setmodel(e, "maps/b_rock0.bsp");
+		e.aflag = 5;
+		e.weapon = 3;
+		e.netname = "rockets";
+		setsize(e, '0 0 0', '32 32 56');
+	}
+	else if (self.style == 4)
+	{
+		e.touch = ammo_touch;
+		setmodel(e, "maps/b_batt0.bsp");
+		e.aflag = 6;
+		e.weapon = 4;
+		e.netname = "cells";
+		setsize(e, '0 0 0', '32 32 56');
+	}
+	else if (self.style == 5)
+	{
+		e.touch = health_touch;
+		setmodel(e, "maps/b_bh25.bsp");
+		e.noise = "items/health1.wav";
+		e.healamount = 25;
+		e.healtype = 1;
+		setsize(e, '0 0 0', '32 32 56');
+	}
+
+	e.mdl = e.model; // so it can be restored on respawn
+	e.flags = FL_ITEM; // make extra wide
+	e.solid = SOLID_TRIGGER;
+	e.movetype = MOVETYPE_TOSS;
+	e.velocity_z = 300;
+	e.velocity_x = -100 + (random() * 200);
+	e.velocity_y = -100 + (random() * 200);
+	// e.velocity_x = -self.velocity_x*0.1;
+	// e.velocity_y = -self.velocity_y*0.1;
+	// e.velocity_z = 300;
 
 	remove(self);
 }
 
 void() misc_box1 =
 {
-	float oldz;
+	if (self.style == 1) precache_model("maps/b_shell0.bsp");
+	else if (self.style == 2) precache_model("maps/b_nail0.bsp");
+	else if (self.style == 3) precache_model("maps/b_rock0.bsp");
+	else if (self.style == 4) precache_model("maps/b_batt0.bsp");
+	else if (self.style == 5) 
+	{
+		precache_model("maps/b_bh25.bsp");
+		precache_sound("items/health1.wav");
+	}
 
-	precache_model("maps/b_shell0.bsp");
+	float oldz;
 
 	self.solid = SOLID_BBOX;
 	self.movetype = MOVETYPE_NONE;

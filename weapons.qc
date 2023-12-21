@@ -117,6 +117,8 @@ void() GravTouch =
 		T_Damage(other, self, self.owner, self.dmg);
 		return;
 	}
+	if (other.solid == SOLID_BBOX)
+		ResetPhysObject(self);
 }
 
 void(entity cur_obj, entity new_obj) CheckPhysType = // checks to see if thrown phys obj needs to be a grenade
@@ -136,7 +138,8 @@ void(entity cur_obj, entity new_obj) CheckPhysType = // checks to see if thrown 
 			// new_obj.th_die = barrel_explode;
 			new_obj.th_die = cur_obj.th_die;
 			new_obj.touch = GravTouch;
-			new_obj.spawnflags = cur_obj.spawnflags;
+			// new_obj.spawnflags = cur_obj.spawnflags;
+			new_obj.style = cur_obj.style;
 		}
 		else
 		{
