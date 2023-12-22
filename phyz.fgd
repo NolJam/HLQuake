@@ -336,11 +336,11 @@
 	items(choices) : "Spawn Item" : 0 =
 	[
 		0 : "Nothing"
-		1 : "Shells"
-		2 : "Nails"
-		3 : "Rockets"
-		4 : "Cells"
-		5 : "Health"
+		256 : "Shells"
+		512 : "Nails"
+		1024 : "Rockets"
+		2048 : "Cells"
+		65536 : "Health"
 	]
 	style(choices) : "Model" : 0 =
 	[

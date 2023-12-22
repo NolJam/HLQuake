@@ -324,7 +324,7 @@ void() break_box =
 	entity e = spawn();
 	e.origin = self.origin;
 
-	if (self.items == 1)
+	if (self.items == IT_SHELLS)
 	{
 		dprint("spawn shells");
 		dprint("\n");
@@ -335,7 +335,7 @@ void() break_box =
 		e.netname = "shells";
 		setsize(e, '0 0 0', '32 32 56');
 	}
-	else if (self.items == 2)
+	else if (self.items == IT_NAILS)
 	{
 		e.touch = ammo_touch;
 		setmodel(e, "maps/b_nail0.bsp");
@@ -344,7 +344,7 @@ void() break_box =
 		e.netname = "nails";
 		setsize(e, '0 0 0', '32 32 56');
 	}
-	else if (self.items == 3)
+	else if (self.items == IT_ROCKETS)
 	{
 		e.touch = ammo_touch;
 		setmodel(e, "maps/b_rock0.bsp");
@@ -353,7 +353,7 @@ void() break_box =
 		e.netname = "rockets";
 		setsize(e, '0 0 0', '32 32 56');
 	}
-	else if (self.items == 4)
+	else if (self.items == IT_CELLS)
 	{
 		e.touch = ammo_touch;
 		setmodel(e, "maps/b_batt0.bsp");
@@ -362,7 +362,7 @@ void() break_box =
 		e.netname = "cells";
 		setsize(e, '0 0 0', '32 32 56');
 	}
-	else if (self.items == 5)
+	else if (self.items == IT_SUPERHEALTH)
 	{
 		e.touch = health_touch;
 		setmodel(e, "maps/b_bh25.bsp");
