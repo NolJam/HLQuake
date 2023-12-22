@@ -325,15 +325,15 @@
 @PointClass base(Appearflags) size(0 0 0, 32 32 32) model({ "path": ":maps/b_exbox2.bsp" }) = misc_explobox2 : "Small exploding container" []
 @PointClass base(Appearflags) size(0 0 0, 32 32 32) model({ "path": ":maps/box1.bsp" }) = misc_box1 : "Small breakable box"
 [
-	spawnflags(Flags) = // currently not used, replaced by style
-	[
-		1 : "Shells" : 0
-		2 : "Nails" : 0
-		4 : "Rockets" : 0
-		8 : "Cells" : 0
-		16 : "Health": 0
-	]
-	style(choices) : "Spawn Item" : 0 =
+	// spawnflags(Flags) = // currently not used, replaced by style
+	// [
+	// 	1 : "Shells" : 0
+	// 	2 : "Nails" : 0
+	// 	4 : "Rockets" : 0
+	// 	8 : "Cells" : 0
+	// 	16 : "Health": 0
+	// ]
+	items(choices) : "Spawn Item" : 0 =
 	[
 		0 : "Nothing"
 		1 : "Shells"
@@ -341,6 +341,11 @@
 		3 : "Rockets"
 		4 : "Cells"
 		5 : "Health"
+	]
+	style(choices) : "Model" : 0 =
+	[
+		0 : "Small"
+		1 : "Large"
 	]
 ]
 @PointClass base(Appearflags) size(-8 -8 -8, 8 8 8) model({ "path": ":progs/teleport.mdl" }) = misc_teleporttrain : "Flying teleporter destination"

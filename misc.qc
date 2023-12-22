@@ -310,9 +310,10 @@ void() misc_explobox2 =
 
 void() break_box =
 {
-	ThrowGib("progs/gib3.mdl", self.health);
+	ThrowGib("progs/wood_gib1.mdl", self.health);
+	ThrowGib("progs/wood_gib1.mdl", self.health);
 
-	if (self.style == 0)
+	if (self.items == 0)
 	{
 		dprint("nothing to spawn");
 		dprint("\n");
@@ -323,7 +324,7 @@ void() break_box =
 	entity e = spawn();
 	e.origin = self.origin;
 
-	if (self.style == 1)
+	if (self.items == 1)
 	{
 		dprint("spawn shells");
 		dprint("\n");
@@ -334,7 +335,7 @@ void() break_box =
 		e.netname = "shells";
 		setsize(e, '0 0 0', '32 32 56');
 	}
-	else if (self.style == 2)
+	else if (self.items == 2)
 	{
 		e.touch = ammo_touch;
 		setmodel(e, "maps/b_nail0.bsp");
@@ -343,7 +344,7 @@ void() break_box =
 		e.netname = "nails";
 		setsize(e, '0 0 0', '32 32 56');
 	}
-	else if (self.style == 3)
+	else if (self.items == 3)
 	{
 		e.touch = ammo_touch;
 		setmodel(e, "maps/b_rock0.bsp");
@@ -352,7 +353,7 @@ void() break_box =
 		e.netname = "rockets";
 		setsize(e, '0 0 0', '32 32 56');
 	}
-	else if (self.style == 4)
+	else if (self.items == 4)
 	{
 		e.touch = ammo_touch;
 		setmodel(e, "maps/b_batt0.bsp");
@@ -361,7 +362,7 @@ void() break_box =
 		e.netname = "cells";
 		setsize(e, '0 0 0', '32 32 56');
 	}
-	else if (self.style == 5)
+	else if (self.items == 5)
 	{
 		e.touch = health_touch;
 		setmodel(e, "maps/b_bh25.bsp");
@@ -387,11 +388,13 @@ void() break_box =
 
 void() misc_box1 =
 {
-	if (self.style == 1) precache_model("maps/b_shell0.bsp");
-	else if (self.style == 2) precache_model("maps/b_nail0.bsp");
-	else if (self.style == 3) precache_model("maps/b_rock0.bsp");
-	else if (self.style == 4) precache_model("maps/b_batt0.bsp");
-	else if (self.style == 5) 
+	precache_model("progs/wood_gib1.mdl");
+
+	if (self.items == 1) precache_model("maps/b_shell0.bsp");
+	else if (self.items == 2) precache_model("maps/b_nail0.bsp");
+	else if (self.items == 3) precache_model("maps/b_rock0.bsp");
+	else if (self.items == 4) precache_model("maps/b_batt0.bsp");
+	else if (self.items == 5) 
 	{
 		precache_model("maps/b_bh25.bsp");
 		precache_sound("items/health1.wav");
@@ -399,10 +402,21 @@ void() misc_box1 =
 
 	float oldz;
 
+	if (self.style == 1)
+	{
+		precache_model("maps/box2.bsp");
+		setmodel(self, "maps/box2.bsp");
+	}
+	else
+	{
+		precache_model("maps/box1.bsp");
+		setmodel(self, "maps/box1.bsp");
+	}
+
 	self.solid = SOLID_BBOX;
 	self.movetype = MOVETYPE_NONE;
-	precache_model("maps/box1.bsp");
-	setmodel(self, "maps/box1.bsp");
+	// precache_model("maps/box1.bsp");
+	// setmodel(self, "maps/box1.bsp");
 	precache_sound("weapons/r_exp3.wav");
 	self.health = 20;
 	self.th_die = break_box;

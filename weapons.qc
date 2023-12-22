@@ -79,7 +79,7 @@ void(entity phys_obj) ResetPhysObject =
 		// e.th_die = barrel_explode;
 		e.th_die = phys_obj.th_die;
 		e.view_ofs = phys_obj.view_ofs;
-		e.spawnflags = phys_obj.spawnflags;
+		e.items = phys_obj.items;
 		// e.origin -= e.view_ofs;
 	}
 	else
@@ -139,7 +139,7 @@ void(entity cur_obj, entity new_obj) CheckPhysType = // checks to see if thrown 
 			new_obj.th_die = cur_obj.th_die;
 			new_obj.touch = GravTouch;
 			// new_obj.spawnflags = cur_obj.spawnflags;
-			new_obj.style = cur_obj.style;
+			new_obj.items = cur_obj.items;
 		}
 		else
 		{
