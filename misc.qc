@@ -670,6 +670,7 @@ void() func_breakable_use =
 {
 	dprint("break wall");
 	dprint("\n");
+	ThrowGib("progs/rock0.mdl", self.health);
 	remove(self);
 }
 
@@ -680,6 +681,8 @@ void() func_breakable =
 	self.solid = SOLID_BSP;
 	self.use = func_breakable_use;
 	setmodel(self, self.model);
+
+	precache_model("progs/rock0.mdl");
 
 	if (self.health > 0) 
 	{
