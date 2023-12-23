@@ -668,9 +668,10 @@ void() func_wall =
 
 void() func_breakable_use =
 {
-	dprint("break wall");
-	dprint("\n");
-	ThrowGib("progs/rock0.mdl", self.health);
+	// dprint("break wall");
+	// dprint(vtos(self.mins));
+	// dprint("\n");
+	VecGib("progs/rock0.mdl", self.health, self.mins);
 	remove(self);
 }
 
