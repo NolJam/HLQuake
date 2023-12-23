@@ -671,7 +671,7 @@ void() func_breakable_use =
 	// dprint("break wall");
 	// dprint(vtos(self.mins));
 	// dprint("\n");
-	VecGib("progs/rock0.mdl", self.health, self.mins);
+	VecGib("progs/rock0.mdl", self.health, self.mins + (self.maxs-self.mins) * 0.5);
 	remove(self);
 }
 
