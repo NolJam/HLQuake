@@ -415,8 +415,6 @@ void() misc_box1 =
 
 	self.solid = SOLID_BBOX;
 	self.movetype = MOVETYPE_NONE;
-	// precache_model("maps/box1.bsp");
-	// setmodel(self, "maps/box1.bsp");
 	precache_sound("weapons/r_exp3.wav");
 	self.health = 20;
 	self.th_die = break_box;
@@ -668,6 +666,27 @@ void() func_wall =
 	setmodel(self, self.model);
 };
 
+void() func_breakable_use =
+{
+	dprint("break wall");
+	dprint("\n");
+	remove(self);
+}
+
+void() func_breakable = 
+{
+	self.angles = '0 0 0';
+	self.movetype = MOVETYPE_PUSH;
+	self.solid = SOLID_BSP;
+	self.use = func_breakable_use;
+	setmodel(self, self.model);
+
+	if (self.health > 0) 
+	{
+		self.takedamage = DAMAGE_AIM;
+		self.th_die = func_breakable_use;
+	}
+}
 
 /*QUAKED func_illusionary (0 .5 .8) ?
 A simple entity that looks solid but lets you walk through it.

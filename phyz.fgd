@@ -448,6 +448,10 @@
 
 @SolidClass base(Appearflags, Targetname) = func_wall : "Wall, starts animation when triggered (if supporting texture)" []
 
+@SolidClass base(Appearflags, Targetname) = func_breakable : "Brush that can be broken via trigger or damage if health > 0" 
+[
+	health(integer) : "Health" : 0
+]
 
 @SolidClass base(Angle, Appearflags, Targetname) = func_button : "Button"
 [
