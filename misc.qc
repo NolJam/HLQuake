@@ -671,7 +671,7 @@ void() func_breakable_use =
 	// dprint("break wall");
 	// dprint(vtos(self.mins));
 	// dprint("\n");
-	VecGib("progs/rock0.mdl", self.health, self.mins + (self.maxs-self.mins) * 0.5);
+	VecGib("maps/rock0.bsp", self.health, self.mins + (self.maxs-self.mins) * 0.5);
 	remove(self);
 }
 
@@ -683,7 +683,7 @@ void() func_breakable =
 	self.use = func_breakable_use;
 	setmodel(self, self.model);
 
-	precache_model("progs/rock0.mdl");
+	precache_model("maps/rock0.bsp");
 
 	if (self.health > 0) 
 	{
