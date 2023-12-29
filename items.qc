@@ -19,7 +19,7 @@
 void() W_SetCurrentAmmo;
 /* ALL LIGHTS SHOULD BE 0 1 0 IN COLOR ALL OTHER ITEMS SHOULD
 BE .8 .3 .4 IN COLOR */
-
+void() misc_box1;
 
 void() SUB_regen =
 {
@@ -708,24 +708,30 @@ float WEAPON_BIG2 = 1;
 
 void() item_shells =
 {
-	self.touch = ammo_touch;
+	// spawn as a box
+	self.items = IT_SHELLS;
+	misc_box1();
 
-	if (self.spawnflags & WEAPON_BIG2)
-	{
-		precache_model("maps/b_shell1.bsp");
-		setmodel(self, "maps/b_shell1.bsp");
-		self.aflag = 40;
-	}
-	else
-	{
-		precache_model("maps/b_shell0.bsp");
-		setmodel(self, "maps/b_shell0.bsp");
-		self.aflag = 20;
-	}
-	self.weapon = 1;
-	self.netname = "shells";
-	setsize(self, '0 0 0', '32 32 56');
-	StartItem();
+	// original code
+
+	// self.touch = ammo_touch;
+
+	// if (self.spawnflags & WEAPON_BIG2)
+	// {
+	// 	precache_model("maps/b_shell1.bsp");
+	// 	setmodel(self, "maps/b_shell1.bsp");
+	// 	self.aflag = 40;
+	// }
+	// else
+	// {
+	// 	precache_model("maps/b_shell0.bsp");
+	// 	setmodel(self, "maps/b_shell0.bsp");
+	// 	self.aflag = 20;
+	// }
+	// self.weapon = 1;
+	// self.netname = "shells";
+	// setsize(self, '0 0 0', '32 32 56');
+	// StartItem();
 };
 
 /*QUAKED item_spikes (0 .5 .8) (0 0 0) (32 32 32) big
@@ -733,24 +739,29 @@ void() item_shells =
 
 void() item_spikes =
 {
-	self.touch = ammo_touch;
+	// spawn as a box
+	self.items = IT_NAILS;
+	misc_box1();
 
-	if (self.spawnflags & WEAPON_BIG2)
-	{
-		precache_model("maps/b_nail1.bsp");
-		setmodel(self, "maps/b_nail1.bsp");
-		self.aflag = 50;
-	}
-	else
-	{
-		precache_model("maps/b_nail0.bsp");
-		setmodel(self, "maps/b_nail0.bsp");
-		self.aflag = 25;
-	}
-	self.weapon = 2;
-	self.netname = "nails";
-	setsize(self, '0 0 0', '32 32 56');
-	StartItem();
+	// original code
+	// self.touch = ammo_touch;
+
+	// if (self.spawnflags & WEAPON_BIG2)
+	// {
+	// 	precache_model("maps/b_nail1.bsp");
+	// 	setmodel(self, "maps/b_nail1.bsp");
+	// 	self.aflag = 50;
+	// }
+	// else
+	// {
+	// 	precache_model("maps/b_nail0.bsp");
+	// 	setmodel(self, "maps/b_nail0.bsp");
+	// 	self.aflag = 25;
+	// }
+	// self.weapon = 2;
+	// self.netname = "nails";
+	// setsize(self, '0 0 0', '32 32 56');
+	// StartItem();
 };
 
 /*QUAKED item_rockets (0 .5 .8) (0 0 0) (32 32 32) big
@@ -758,24 +769,29 @@ void() item_spikes =
 
 void() item_rockets =
 {
-	self.touch = ammo_touch;
+	// spawn as a box
+	self.items = IT_ROCKETS;
+	misc_box1();
 
-	if (self.spawnflags & WEAPON_BIG2)
-	{
-		precache_model("maps/b_rock1.bsp");
-		setmodel(self, "maps/b_rock1.bsp");
-		self.aflag = 10;
-	}
-	else
-	{
-		precache_model("maps/b_rock0.bsp");
-		setmodel(self, "maps/b_rock0.bsp");
-		self.aflag = 5;
-	}
-	self.weapon = 3;
-	self.netname = "rockets";
-	setsize(self, '0 0 0', '32 32 56');
-	StartItem();
+	// original code
+	// self.touch = ammo_touch;
+
+	// if (self.spawnflags & WEAPON_BIG2)
+	// {
+	// 	precache_model("maps/b_rock1.bsp");
+	// 	setmodel(self, "maps/b_rock1.bsp");
+	// 	self.aflag = 10;
+	// }
+	// else
+	// {
+	// 	precache_model("maps/b_rock0.bsp");
+	// 	setmodel(self, "maps/b_rock0.bsp");
+	// 	self.aflag = 5;
+	// }
+	// self.weapon = 3;
+	// self.netname = "rockets";
+	// setsize(self, '0 0 0', '32 32 56');
+	// StartItem();
 };
 
 
@@ -784,24 +800,29 @@ void() item_rockets =
 
 void() item_cells =
 {
-	self.touch = ammo_touch;
+	// spawn as a box
+	self.items = IT_CELLS;
+	misc_box1();
 
-	if (self.spawnflags & WEAPON_BIG2)
-	{
-		precache_model("maps/b_batt1.bsp");
-		setmodel(self, "maps/b_batt1.bsp");
-		self.aflag = 12;
-	}
-	else
-	{
-		precache_model("maps/b_batt0.bsp");
-		setmodel(self, "maps/b_batt0.bsp");
-		self.aflag = 6;
-	}
-	self.weapon = 4;
-	self.netname = "cells";
-	setsize(self, '0 0 0', '32 32 56');
-	StartItem();
+	// original code
+	// self.touch = ammo_touch;
+
+	// if (self.spawnflags & WEAPON_BIG2)
+	// {
+	// 	precache_model("maps/b_batt1.bsp");
+	// 	setmodel(self, "maps/b_batt1.bsp");
+	// 	self.aflag = 12;
+	// }
+	// else
+	// {
+	// 	precache_model("maps/b_batt0.bsp");
+	// 	setmodel(self, "maps/b_batt0.bsp");
+	// 	self.aflag = 6;
+	// }
+	// self.weapon = 4;
+	// self.netname = "cells";
+	// setsize(self, '0 0 0', '32 32 56');
+	// StartItem();
 };
 
 

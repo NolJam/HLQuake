@@ -390,11 +390,11 @@ void() misc_box1 =
 {
 	precache_model("progs/wood_gib1.mdl");
 
-	if (self.items == 1) precache_model("maps/b_shell0.bsp");
-	else if (self.items == 2) precache_model("maps/b_nail0.bsp");
-	else if (self.items == 3) precache_model("maps/b_rock0.bsp");
-	else if (self.items == 4) precache_model("maps/b_batt0.bsp");
-	else if (self.items == 5) 
+	if (self.items == IT_SHELLS) precache_model("maps/b_shell0.bsp");
+	else if (self.items == IT_NAILS) precache_model("maps/b_nail0.bsp");
+	else if (self.items == IT_ROCKETS) precache_model("maps/b_rock0.bsp");
+	else if (self.items == IT_CELLS) precache_model("maps/b_batt0.bsp");
+	else if (self.items == IT_SUPERHEALTH) 
 	{
 		precache_model("maps/b_bh25.bsp");
 		precache_sound("items/health1.wav");
@@ -418,6 +418,7 @@ void() misc_box1 =
 	precache_sound("weapons/r_exp3.wav");
 	self.health = 20;
 	self.th_die = break_box;
+	self.use = break_box;
 	self.takedamage = DAMAGE_AIM;
 	self.view_ofs = '16 16 0'; 
 
