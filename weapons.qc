@@ -1014,7 +1014,7 @@ void() W_SetCurrentAmmo =
 	if (self.weapon == IT_AXE)
 	{
 		self.currentammo = 0;
-		self.weaponmodel = "progs/v_axe.mdl";
+		self.weaponmodel = "progs/v_gravity_gun_20fps.mdl";
 		self.weaponframe = 0;
 	}
 	else if (self.weapon == IT_SHOTGUN)

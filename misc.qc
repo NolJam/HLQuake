@@ -310,6 +310,7 @@ void() misc_explobox2 =
 
 void() break_box =
 {
+	sound(self, CHAN_ITEM, "wood_break1.wav", 1, ATTN_NORM);
 	ThrowGib("progs/wood_gib1.mdl", self.health);
 	ThrowGib("progs/wood_gib1.mdl", self.health);
 
@@ -391,6 +392,7 @@ void() break_box =
 void() misc_box1 =
 {
 	precache_model("progs/wood_gib1.mdl");
+	precache_sound("wood_break1.wav");
 
 	if (self.items == IT_SHELLS) precache_model("maps/b_shell0.bsp");
 	else if (self.items == IT_NAILS) precache_model("maps/b_nail0.bsp");
