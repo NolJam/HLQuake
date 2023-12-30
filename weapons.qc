@@ -48,6 +48,8 @@ void() W_Precache =
 	precache_sound("weapons/grenade.wav"); // grenade launcher
 	precache_sound("weapons/bounce.wav"); // grenade bounce
 	precache_sound("weapons/shotgn2.wav"); // super shotgun
+	precache_sound("gravity_gun_charge.wav");
+	precache_sound("gravity_gun_fire.wav");
 };
 
 float() crandom =
@@ -192,6 +194,7 @@ void() RadiusGrab =
 	{
 		if (self.holding_entity && it.touch == OgreGrenadeTouch)
 		{
+			self.holding_entity = TRUE;
 			self.held_entity = it;
 			self.held_entity.owner = self;
 		}
@@ -218,6 +221,7 @@ void() W_FireGravGun =
 		self.punchangle_x = -3;
 
 		player_axeb1();
+		sound(self, CHAN_WEAPON, "gravity_gun_fire.wav", 1, ATTN_NORM);
 
 		entity missile;
 		missile = spawn();
@@ -266,7 +270,7 @@ void() W_FireGravGun =
 	source = self.origin + '0 0 16';
 	traceline(source, source + v_forward*192, FALSE, self);
 	
-	RadiusGrab();
+	// RadiusGrab();
 
 	// if (trace_ent.solid == SOLID_BBOX)
 	// {
@@ -277,12 +281,15 @@ void() W_FireGravGun =
 	if (trace_ent.movetype == MOVETYPE_STEP)
 	{
 		player_axe1();
+		sound(self, CHAN_WEAPON, "gravity_gun_fire.wav", 1, ATTN_NORM);
 		T_Damage(trace_ent, self, self, 40);
 		self.punchangle_x = -3;
 		self.velocity += -v_forward*400;
+		return;
 	}
 	else
 		player_axeb1();
+		sound(self, CHAN_WEAPON, "gravity_gun_charge.wav", 1, ATTN_NORM);
 		RadiusGrab();
 		// TraceGrab(10, aim(self, 100000), '0.15 0.15 0'); // if no ent directly ahead, try w/ spread
 }
