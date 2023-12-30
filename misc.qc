@@ -322,7 +322,7 @@ void() break_box =
 	}
 
 	entity e = spawn();
-	e.origin = self.origin;
+	e.origin = self.origin - normalize(self.velocity)*32;
 
 	if (self.items == IT_SHELLS)
 	{
@@ -379,9 +379,11 @@ void() break_box =
 	e.velocity_z = 100;
 	// e.velocity_x = -100 + (random() * 200);
 	// e.velocity_y = -100 + (random() * 200);
-	e.velocity_x = -self.velocity_x*0.1;
-	e.velocity_y = -self.velocity_y*0.1;
-	// e.velocity_z = 300;
+	// e.velocity_x = -self.velocity_x*0.1;
+	// e.velocity_y = -self.velocity_y*0.1;
+	e.velocity = -self.velocity*0.1;
+	if (e.velocity_z == 0)
+		e.velocity_z = 150;
 
 	remove(self);
 }
@@ -672,6 +674,7 @@ void() func_breakable_use =
 	// dprint("break wall");
 	// dprint(vtos(self.mins));
 	// dprint("\n");
+	VecGib("maps/rock0.bsp", self.health, self.mins + (self.maxs-self.mins) * 0.5);
 	VecGib("maps/rock0.bsp", self.health, self.mins + (self.maxs-self.mins) * 0.5);
 	remove(self);
 }
