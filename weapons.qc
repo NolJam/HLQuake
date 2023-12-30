@@ -28,6 +28,8 @@ void() GrenadeTouch;
 void() GrenadeExplode;
 void() barrel_explode;
 void() break_box
+void() player_axeb1;
+void() player_axe1;
 
 
 
@@ -215,6 +217,8 @@ void() W_FireGravGun =
 
 		self.punchangle_x = -3;
 
+		player_axeb1();
+
 		entity missile;
 		missile = spawn();
 		missile.owner = self;
@@ -272,11 +276,13 @@ void() W_FireGravGun =
 	// }
 	if (trace_ent.movetype == MOVETYPE_STEP)
 	{
+		player_axe1();
 		T_Damage(trace_ent, self, self, 40);
 		self.punchangle_x = -3;
 		self.velocity += -v_forward*400;
 	}
 	else
+		player_axeb1();
 		RadiusGrab();
 		// TraceGrab(10, aim(self, 100000), '0.15 0.15 0'); // if no ent directly ahead, try w/ spread
 }
@@ -1146,20 +1152,21 @@ void() W_Attack =
 
 	if (self.weapon == IT_AXE)
 	{
-		W_FireGravGun();
-		self.attack_finished = time + 0.3;
+		// W_FireGravGun();
+		// self.attack_finished = time + 0.3;
 
 		// sound(self, CHAN_WEAPON, "weapons/ax1.wav", 1, ATTN_NORM);
 		// r = random();
-		// if (r < 0.25)
+		// if (self.holding_entity)
 		// 	player_axe1();
-		// else if (r<0.5)
+		// else
 		// 	player_axeb1();
 		// else if (r<0.75)
 		// 	player_axec1();
 		// else
 		// 	player_axed1();
-		// self.attack_finished = time + 0.5;
+		W_FireGravGun();
+		self.attack_finished = time + 0.5;
 	}
 	else if (self.weapon == IT_SHOTGUN)
 	{
