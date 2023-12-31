@@ -64,10 +64,36 @@ void(entity phys_obj) ResetPhysObject =
 	e = spawn();
 	e.angles = phys_obj.angles;
 	setmodel(e, phys_obj.model);
+	e.skin = phys_obj.skin;
+
 	e.classname = phys_obj.classname;
-	e.solid = SOLID_BBOX;
+	e.solid = phys_obj.solid;
 	e.movetype = MOVETYPE_BOUNCE;
-	setorigin(e, phys_obj.origin);
+	setorigin(e, phys_obj.origin); // prevents spawning in floor
+	setsize(e, phys_obj.mins, phys_obj.maxs);
+	e.velocity = phys_obj.velocity;
+	// ammo
+	e.items = phys_obj.items;
+	e.aflag = phys_obj.aflag;
+	e.weapon = phys_obj.weapon;
+	e.netname = phys_obj.netname;
+	// health
+	e.healamount = phys_obj.healamount;
+	e.healtype = phys_obj.healtype;
+	// armor
+	e.armorvalue = phys_obj.armorvalue;
+	e.armortype = phys_obj.armortype;
+	// backpack
+	e.ammo_shells = phys_obj.ammo_shells;
+	e.ammo_nails = phys_obj.ammo_nails;
+	e.ammo_rockets = phys_obj.ammo_rockets;
+	e.ammo_cells = phys_obj.ammo_cells;
+
+	e.noise = phys_obj.noise;
+	e.touch = phys_obj.touch;
+	e.takedamage = phys_obj.takedamage;
+	e.view_ofs = phys_obj.view_ofs;
+	// e.flags = phys_obj.flags;
 
 	if (phys_obj.touch == OgreGrenadeTouch || phys_obj.touch == GrenadeTouch)
 	{
@@ -86,8 +112,12 @@ void(entity phys_obj) ResetPhysObject =
 		e.items = phys_obj.items;
 		// e.origin -= e.view_ofs;
 	}
-	else
-		setsize(e, MIN_DEFAULT_BBOX, MAX_DEFAULT_BBOX);
+	else if(phys_obj.flags & FL_ITEM)
+	{
+		e.flags = FL_ITEM;
+	}
+	// else
+	// 	setsize(e, MIN_DEFAULT_BBOX, MAX_DEFAULT_BBOX);
 
 	remove(phys_obj);
 }
@@ -209,6 +239,13 @@ void() RadiusGrab =
 			self.holding_entity = TRUE;
 			self.held_entity = it;
 			self.held_entity.owner = self;
+		}
+		else if (it.flags & FL_ITEM)
+		{
+			it.velocity = v_up*100 - v_forward*400;
+			dprint(vtos(it.velocity));
+			dprint("\n");
+			ResetPhysObject(it);
 		}
 	}
 }
