@@ -679,6 +679,7 @@ void() func_breakable_use =
 	// dprint("\n");
 	VecGib("maps/rock0.bsp", self.health, self.mins + (self.maxs-self.mins) * 0.5);
 	VecGib("maps/rock0.bsp", self.health, self.mins + (self.maxs-self.mins) * 0.5);
+	sound(self, CHAN_AUTO, "weapons/r_exp3.wav", 1, ATTN_NORM);
 	remove(self);
 }
 
