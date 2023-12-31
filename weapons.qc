@@ -803,12 +803,6 @@ void() GrenadeTouch =
 		self.avelocity = '0 0 0';
 };
 
-void() ReparentGrenade = // sets grenade's owner to self
-{
-	self.owner = self;
-	self.nextthink = time + 2.5;
-	self.think = GrenadeExplode;
-}
 
 /*
 ================
