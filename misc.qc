@@ -323,7 +323,7 @@ void() break_box =
 	}
 
 	entity e = spawn();
-	e.origin = self.origin - normalize(self.velocity)*32;
+	e.origin = self.origin - normalize(self.velocity)*64;
 
 	if (self.items == IT_SHELLS)
 	{
@@ -376,7 +376,7 @@ void() break_box =
 	e.mdl = e.model; // so it can be restored on respawn
 	e.flags = FL_ITEM; // make extra wide
 	e.solid = SOLID_TRIGGER;
-	e.movetype = MOVETYPE_TOSS;
+	e.movetype = MOVETYPE_BOUNCE;
 	e.velocity_z = 100;
 	// e.velocity_x = -100 + (random() * 200);
 	// e.velocity_y = -100 + (random() * 200);
