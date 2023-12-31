@@ -200,7 +200,11 @@ void() RadiusGrab =
 			self.held_entity = it;
 			self.held_entity.owner = self;
 		}
-		else if (it.solid == SOLID_BBOX && it.movetype != MOVETYPE_FLY)
+		else if (it.movetype == MOVETYPE_FLY || it.movetype == MOVETYPE_FLYMISSILE)
+		{
+			self.holding_entity = self.holding_entity;
+		}
+		else if (it.solid == SOLID_BBOX)
 		{
 			self.holding_entity = TRUE;
 			self.held_entity = it;
