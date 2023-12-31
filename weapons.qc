@@ -1122,6 +1122,12 @@ void() W_SetCurrentAmmo =
 		self.weaponmodel = "";
 		self.weaponframe = 0;
 	}
+
+	if (self.held_entity != world && self.weapon != IT_AXE)
+	{
+	ResetPhysObject(self.held_entity);
+	self.holding_entity = FALSE;
+	}
 };
 
 float() W_BestWeapon =
