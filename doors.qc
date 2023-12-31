@@ -23,6 +23,8 @@ float DOOR_GOLD_KEY = 8;
 float DOOR_SILVER_KEY = 16;
 float DOOR_TOGGLE = 32;
 
+void() func_breakable;
+
 /*
 
 Doors are similar to buttons, but can spawn a fat trigger field around them
@@ -743,58 +745,61 @@ If a secret door has a targetname, it will only be opened by it's botton or trig
 
 void() func_door_secret =
 {
-	if (self.sounds == 0)
-		self.sounds = 3;
-	if (self.sounds == 1)
-	{
-		precache_sound("doors/latch2.wav");
-		precache_sound("doors/winch2.wav");
-		precache_sound("doors/drclos4.wav");
-		self.noise1 = "doors/latch2.wav";
-		self.noise2 = "doors/winch2.wav";
-		self.noise3 = "doors/drclos4.wav";
-	}
-	if (self.sounds == 2)
-	{
-		precache_sound("doors/airdoor1.wav");
-		precache_sound("doors/airdoor2.wav");
-		self.noise2 = "doors/airdoor1.wav";
-		self.noise1 = "doors/airdoor2.wav";
-		self.noise3 = "doors/airdoor2.wav";
-	}
-	if (self.sounds == 3)
-	{
-		precache_sound("doors/basesec1.wav");
-		precache_sound("doors/basesec2.wav");
-		self.noise2 = "doors/basesec1.wav";
-		self.noise1 = "doors/basesec2.wav";
-		self.noise3 = "doors/basesec2.wav";
-	}
+	self.health = 1;
+	func_breakable();
 
-	if (!self.dmg)
-		self.dmg = 2;
+	// if (self.sounds == 0)
+	// 	self.sounds = 3;
+	// if (self.sounds == 1)
+	// {
+	// 	precache_sound("doors/latch2.wav");
+	// 	precache_sound("doors/winch2.wav");
+	// 	precache_sound("doors/drclos4.wav");
+	// 	self.noise1 = "doors/latch2.wav";
+	// 	self.noise2 = "doors/winch2.wav";
+	// 	self.noise3 = "doors/drclos4.wav";
+	// }
+	// if (self.sounds == 2)
+	// {
+	// 	precache_sound("doors/airdoor1.wav");
+	// 	precache_sound("doors/airdoor2.wav");
+	// 	self.noise2 = "doors/airdoor1.wav";
+	// 	self.noise1 = "doors/airdoor2.wav";
+	// 	self.noise3 = "doors/airdoor2.wav";
+	// }
+	// if (self.sounds == 3)
+	// {
+	// 	precache_sound("doors/basesec1.wav");
+	// 	precache_sound("doors/basesec2.wav");
+	// 	self.noise2 = "doors/basesec1.wav";
+	// 	self.noise1 = "doors/basesec2.wav";
+	// 	self.noise3 = "doors/basesec2.wav";
+	// }
 
-	// Magic formula...
-	self.mangle = self.angles;
-	self.angles = '0 0 0';
-	self.solid = SOLID_BSP;
-	self.movetype = MOVETYPE_PUSH;
-	self.classname = "door";
-	setmodel(self, self.model);
-	setorigin(self, self.origin);
+	// if (!self.dmg)
+	// 	self.dmg = 2;
 
-	self.touch = secret_touch;
-	self.blocked = secret_blocked;
-	self.speed = 50;
-	self.use = fd_secret_use;
-	if ( !self.targetname || self.spawnflags&SECRET_YES_SHOOT)
-	{
-		self.health = 10000;
-		self.takedamage = DAMAGE_YES;
-		self.th_pain = fd_secret_pain;
-		self.th_die = fd_secret_use;
-	}
-	self.oldorigin = self.origin;
-	if (!self.wait)
-		self.wait = 5; // 5 seconds before closing
+	// // Magic formula...
+	// self.mangle = self.angles;
+	// self.angles = '0 0 0';
+	// self.solid = SOLID_BSP;
+	// self.movetype = MOVETYPE_PUSH;
+	// self.classname = "door";
+	// setmodel(self, self.model);
+	// setorigin(self, self.origin);
+
+	// self.touch = secret_touch;
+	// self.blocked = secret_blocked;
+	// self.speed = 50;
+	// self.use = fd_secret_use;
+	// if ( !self.targetname || self.spawnflags&SECRET_YES_SHOOT)
+	// {
+	// 	self.health = 10000;
+	// 	self.takedamage = DAMAGE_YES;
+	// 	self.th_pain = fd_secret_pain;
+	// 	self.th_die = fd_secret_use;
+	// }
+	// self.oldorigin = self.origin;
+	// if (!self.wait)
+	// 	self.wait = 5; // 5 seconds before closing
 };
