@@ -144,6 +144,8 @@ void(entity cur_obj, entity new_obj) CheckPhysType = // checks to see if thrown 
 			new_obj.touch = GravTouch;
 			// new_obj.spawnflags = cur_obj.spawnflags;
 			new_obj.items = cur_obj.items;
+			new_obj.angles = cur_obj.angles;
+			setsize(new_obj, cur_obj.mins, cur_obj.maxs);
 		}
 		else
 		{
@@ -256,8 +258,8 @@ void() W_FireGravGun =
 
 		CheckPhysType(self.held_entity, missile);
 
+		setorigin(missile, self.origin + v_forward*64 + v_up*16 - self.held_entity.view_ofs);
 		remove(self.held_entity);
-		setorigin(missile, self.origin + v_forward*64 + v_up*16);
 
 		return;
 	}

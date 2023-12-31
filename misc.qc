@@ -323,7 +323,8 @@ void() break_box =
 	}
 
 	entity e = spawn();
-	e.origin = self.origin - normalize(self.velocity)*64;
+	// e.origin = self.origin - normalize(self.velocity)*64;
+	e.origin = self.origin;
 
 	if (self.items == IT_SHELLS)
 	{
