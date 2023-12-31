@@ -93,6 +93,8 @@ void(entity phys_obj) ResetPhysObject =
 	e.touch = phys_obj.touch;
 	e.takedamage = phys_obj.takedamage;
 	e.view_ofs = phys_obj.view_ofs;
+	e.target = phys_obj.target;
+	e.targetname = phys_obj.targetname;
 	// e.flags = phys_obj.flags;
 
 	if (phys_obj.touch == OgreGrenadeTouch || phys_obj.touch == GrenadeTouch)
