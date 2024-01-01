@@ -1,3 +1,14 @@
+# HLQuake Source Code
+
+HLQuake is a mod that ports Half Life gameplay into Quake. It is in early and active development.
+Mod available at https://www.moddb.com/mods/hlquake
+Gravity gun model & animations ported to Quake by the awesome Kebby
+
+Points of interest:
+- Gravity Gun's code located in weapons.qc (W_FireGravGun, RadiusGrab, CheckPhysType, GravTouch, ResetPhysObject)
+- breakable boxes and func_breakable code located in misc.qc (misc_box1, func_breakable)
+
+Working from cleaned 1.01 QuakeC source by sphuld: https://github.com/shpuld/id1-quakec-cleaned
 
 # Cleaned up Quake id1 v1.01 QuakeC source
 
