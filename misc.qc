@@ -325,7 +325,6 @@ void() break_box =
 
 	entity e = spawn();
 	// e.origin = self.origin - normalize(self.velocity)*64;
-	e.origin = self.origin;
 
 	if (self.items == IT_SHELLS)
 	{
@@ -374,6 +373,8 @@ void() break_box =
 		e.healtype = 1;
 		setsize(e, '0 0 0', '32 32 56');
 	}
+
+	e.origin = self.origin;
 
 	e.mdl = e.model; // so it can be restored on respawn
 	e.flags = FL_ITEM; // make extra wide
