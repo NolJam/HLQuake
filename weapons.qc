@@ -159,6 +159,9 @@ void() GravTouch =
 
 void(entity cur_obj, entity new_obj) CheckPhysType = // checks to see if thrown phys obj needs to be a grenade
 {
+	new_obj.target = cur_obj.target;
+	new_obj.targetname = cur_obj.targetname;
+
 	if (cur_obj.touch == OgreGrenadeTouch || cur_obj.touch == GrenadeTouch)
 		{
 			new_obj.classname = "grenade";

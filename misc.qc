@@ -310,6 +310,7 @@ void() misc_explobox2 =
 
 void() break_box =
 {
+	SUB_UseTargets();
 	sound(self, CHAN_ITEM, "wood_break1.wav", 1, ATTN_NORM);
 	ThrowGib("progs/wood_gib1.mdl", self.health);
 	ThrowGib("progs/wood_gib1.mdl", self.health);
